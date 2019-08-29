@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo-github
+    image: mongo
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      # - MONGO_INITDB_ROOT_USERNAME=root
+      # - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+volumes:
+  mongodata:
+  data:
