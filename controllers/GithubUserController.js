@@ -36,23 +36,14 @@ controller.findUser = async (req, res) => {
 controller.list = (req, res) => {
     try{
         GithubUserModel.find()
-        .populate('tags')
-        .exec((err, results) => {
+        .then(resp => {
             return res.status(200)
-                .json({
-                    total: results.length,
-                    usuarios: results
-                });
+            .json({
+                total: resp.length,
+                usuarios: resp
+            });
         });
-        // .then(resp => {
-        //     return res.status(200)
-        //     .json({
-        //         total: resp.length,
-        //         usuarios: resp
-        //     });
-        // });
     }catch(e){
-        console.error(e);
         return res.status(500)
         .json({
             msg: "Algum erro ocorreu ao pesquisar os usuários do github."

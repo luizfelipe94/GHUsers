@@ -110,8 +110,8 @@ controller.insertTagGHPasta = async (req, res) => {
         if(!ghuser) return res.status(400).json('Não existe este usuário.');
 
         // todas as patas que este usuario estiver.
-        // const pastas = await Pasta.find()
-        // .elemMatch('GHs', { '_id': mongoose.Types.ObjectId(_idGh) });
+        const pastas = await Pasta.find()
+        .elemMatch('GHs', { '_id': mongoose.Types.ObjectId(_idGh) });
 
         const tagData = new Tag({ nome: tag });
         tagData.save(err => {
@@ -120,12 +120,9 @@ controller.insertTagGHPasta = async (req, res) => {
 
         if(tagData){
             await GHModel.findByIdAndUpdate(_idGh, { '$push': { 'tags': tagData._id } }, { 'new': true } );
-            GHModel.find()
-            .populate('tags')
-            .exec((err, gh) => {
-                return err ? res.json(err) : res.json(gh);
-            });
         }
+
+        return res.status(200).json(pastas);
     }
     catch(e){
         console.error(e);
