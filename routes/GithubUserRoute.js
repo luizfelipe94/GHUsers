@@ -1,9 +1,10 @@
 const GithubUserController = require('../controllers/GithubUserController');
+const permissoes = require('../middlewares/permissoes');
 
 module.exports = app => {
     app.route('/github')
-        .get(GithubUserController.list);
+        .get(permissoes('ADMIN'), GithubUserController.list);
 
     app.route('/github/:usuario')
-        .get(GithubUserController.findUser);
+        .get(permissoes('ADMIN'), GithubUserController.findUser);
 }

@@ -1,4 +1,4 @@
-const GithubUserModel   = require('../models/GithubUserModel');
+const GithubUserModel   = require('../models/GithubUserModel').GithubUser;
 const Pasta             = require('../models/PastaModel');
 const Github            = require('../lib/github');
 
@@ -36,23 +36,26 @@ controller.findUser = async (req, res) => {
 controller.list = (req, res) => {
     try{
         GithubUserModel.find()
-        .then(resp => {
+        .populate('tags')
+        .exec((err, results) => {
             return res.status(200)
-            .json({
-                total: resp.length,
-                usuarios: resp
-            });
+                .json({
+                    total: results.length,
+                    usuarios: results
+                });
         });
+        // .then(resp => {
+        //     return res.status(200)
+        //     .json({
+        //         total: resp.length,
+        //         usuarios: resp
+        //     });
+        // });
     }catch(e){
+        console.error(e);
         return res.status(500)
         .json({
             msg: "Algum erro ocorreu ao pesquisar os usuários do github."
         });
     }
-}
-
-controller.insertGHPasta = (req, res) => {
-    const { pastaId, GHId } = req.body;
-    if(!pastaId || !GHId) return res.status(400).json('Id da pasta e do usuario do github são necessários.');
-    // TODO: Continuar...
 }

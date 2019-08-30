@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UsuarioSchema = new mongoose.Schema({
-    email:  { type: String, required: true, min: 10, unique: true },
+    email:  { type: String, required: true, min: 10, unique: true, lowercase: true, match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     cpf:    { type: String, required: true, min: 9, unique: true },
     senha:  { type: String, required: true, min: 6 },
     perfil: { type: String, required: true, enum: ['ADMIN', 'COMUM'], default: 'COMUM' }

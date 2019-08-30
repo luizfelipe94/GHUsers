@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
                     message: 'O token fornecido não é valido.'
                 });
             } else {
+                req.user = decoded;
                 next();
             }
         });

@@ -12,12 +12,14 @@ controller.login = async (req, res) => {
     const usuarioData = await Usuario.find({ email });
     const usuario = usuarioData[0];
 
+    
+
     if(usuario){
         if(bcrypt.compareSync(senha, usuario.senha)){
             usuario.senha = undefined;
-            const payload = { ...usuario };
+            const payload = { usuario };
             const token = jwt.sign(payload, secret, { expiresIn: '2h' });
-            return res.status(200).json(token);
+            return res.status(200).json({ user: usuario,  token });
         }else{
             return res.status(401)
             .json({
