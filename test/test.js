@@ -48,7 +48,7 @@ describe('Github Users', () => {
 
     beforeEach(logar(auth));
 
-    it('Retorna status 200 se conseguir logar.', done => {
+    it('Deve retornar um objeto com total e array de usuarios do github cadastrados no banco.', done => {
         request
         .get('/github')
         .set('Authorization', auth.token)
@@ -56,7 +56,7 @@ describe('Github Users', () => {
         .expect('Content-Type', /json/)
         .end((err, res) => {
             if (err) return done(err);
-            res.body.usuarios.should.be.instanceof(Array);
+            chai.assert.hasAllKeys(res.body, ['total', 'usuarios']);
             done();
         });
     });
@@ -75,7 +75,7 @@ describe('Github Users', () => {
     });
 
     it('Salva um usuário do github no banco.', done => {
-        GHU.deleteMany({})
+        GHU.deleteMany({ 'login': 'luizfelipe94' })
         .then(() => {
             request
             .get('/github/luizfelipe94?salvar=true')
