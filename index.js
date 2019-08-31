@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 require('./routes/LoginRoute')(app);
 
-// app.use(auth);
+app.use(auth);
 
 consign()
     .include('routes')
