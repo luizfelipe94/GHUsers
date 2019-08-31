@@ -18,6 +18,10 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 
+app.get('/', (req, res) => {
+    return res.status(200).json('API USUARIOS GITHUB');
+});
+
 require('./routes/LoginRoute')(app);
 
 app.use(auth);
