@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
     return res.status(200).json('API USUARIOS GITHUB');
 });
 
-
 require('./routes/LoginRoute')(app);
 
 app.use(auth);
@@ -34,3 +33,5 @@ consign()
 
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+
+module.exports = app;

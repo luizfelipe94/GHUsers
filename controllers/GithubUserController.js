@@ -27,7 +27,12 @@ controller.findUser = async (req, res) => {
         });
     
         GHUserData.save(err => {
-            if(err) return res.status(500).json('Não foi possível salvar o úsuario no banco de dados.');
+            if(err) {
+                return res.status(409).json({
+                    sucesso: false,
+                    msg: 'Não foi possível salvar o úsuario no banco de dados.'
+                });
+            }
             return res.status(201).json(GHUserData);
         });
     }
