@@ -7,7 +7,10 @@ const auth          = require('./middlewares/auth');
 
 require('dotenv').config();
 
-const url = process.env.MONGO_URL || 'mongodb://admin:abc123@ds335957.mlab.com:35957/heroku_1sh8s53r';
+// essa env vira do env se ele existir. se tiver no docker, ela esta setada no docker-compose. 
+// caso nao esteja rodando no docker e nao tiver o .env file
+// ira conectar na url do mongolab.
+const url = process.env.DB_URL || 'mongodb://admin:abc123@ds335957.mlab.com:35957/heroku_1sh8s53r';
 
 require('./config/db')(url);
 

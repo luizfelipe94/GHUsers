@@ -4,7 +4,9 @@ services:
     container_name: api-github
     build: .
     ports:
-      - "3010:3005"
+      - "3005:3005"
+    environment:
+    - DB_URL=mongodb://mongo-github/github-users
   mongo:
     container_name: mongo-github
     image: mongo
