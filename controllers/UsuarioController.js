@@ -9,11 +9,7 @@ controller.insert = (req, res) => {
     perfil = perfil.toUpperCase();
     const userData = new Usuario({ email, cpf, senha, perfil });
     userData.save(err => {
-        if(err){
-            if(err.name === 'MongoError' && err.code === 11000) return res.status(500).json('O email precisa ser único.');
-            if(err.name = 'ValidationError') return res.status(500).json(err.message);
-            return res.status(500).json(err);
-        }
+        if(err) return res.status(500).json(err);
         return res.status(201)
         .json({ 
             sucesso: true,
