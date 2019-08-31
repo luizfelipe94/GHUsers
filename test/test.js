@@ -1,8 +1,6 @@
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
 const chai = require('chai');
-const should = chai.should();
 
 // models
 const GHU = require('../models/GithubUserModel').GithubUser;
