@@ -11,9 +11,7 @@ controller.login = async (req, res) => {
     if(!email || !senha) return res.status(400).json({msg: "É necessário passar o email e senha."});
     const usuarioData = await Usuario.find({ email });
     const usuario = usuarioData[0];
-
     
-
     if(usuario){
         if(bcrypt.compareSync(senha, usuario.senha)){
             usuario.senha = undefined;

@@ -9,7 +9,11 @@ controller.insert = (req, res) => {
     perfil = perfil.toUpperCase();
     const userData = new Usuario({ email, cpf, senha, perfil });
     userData.save(err => {
-        if(err) return res.status(500).json({ sucesso: false, msg: 'Não foi possível cadastrar o usuário no banco de dados.' });;
+        if(err){
+            if(err.name === 'MongoError' && err.code === 11000) return res.status(500).json('O email precisa ser único.');
+            if(err.name = 'ValidationError') return res.status(500).json(err.message);
+            return res.status(500).json(err);
+        }
         return res.status(201)
         .json({ 
             sucesso: true,
@@ -52,10 +56,10 @@ controller.findById = (req, res) => {
 }
 
 controller.update = (req, res) => {
-
+    return res.status(501).json('Método ainda não implementado.');
 }
 
 controller.delete = (req, res) => {
-
+    return res.status(501).json('Método ainda não implementado.');
 }
 
