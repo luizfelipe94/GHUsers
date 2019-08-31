@@ -5,7 +5,7 @@ function connect() {
         .on('error', console.log)
         .on('disconnected', connect)
 
-    return mongoose.connect(`mongodb://localhost:27017/github-users`, 
+    return mongoose.connect(`mongodb://mongo-github:27017/github-users`, 
         { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 }
 
