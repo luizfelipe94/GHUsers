@@ -10,7 +10,7 @@ WORKDIR /home/node/api
 COPY package*.json ./
 
 # dando merda
-RUN npm install --quiet node-gyp -g
+# RUN npm install --quiet node-gyp -g
 
 RUN npm install
 
