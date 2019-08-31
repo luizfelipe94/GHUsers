@@ -10,7 +10,7 @@ WORKDIR /home/node/api
 COPY package*.json ./
 
 # dando merda
-RUN npm install --quiet node-gyp
+RUN npm install --quiet node-gyp -g
 
 RUN npm install
 
@@ -22,4 +22,4 @@ USER node
 
 EXPOSE 3005
 
-# CMD [ "node", "index.js" ]
+CMD [ "node", "index.js" ]
