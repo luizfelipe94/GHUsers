@@ -1,1 +1,1 @@
-echo 'porra'
+echo 'montar um build bonitinho'

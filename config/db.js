@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
-function connect() {
+function connect(url) {
     mongoose.connection
-        .on('error', console.log)
-        .on('disconnected', connect)
+        .on('error', (err) => {
+            console.log('Erro ao conectar no banco de dados.');
+            process.exit(1);
+        })
+        .on('disconnected', connect);
 
-    return mongoose.connect(`mongodb://admin:abc123@ds335957.mlab.com:35957/heroku_1sh8s53r`, 
+    return mongoose.connect(url, 
         { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 }
 

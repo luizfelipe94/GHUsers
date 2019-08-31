@@ -1,6 +1,5 @@
 const Pasta = require('../models/PastaModel');
 const GHModel = require('../models/GithubUserModel').GithubUser;
-const Tag = require('../models/GithubUserModel').Tag;
 const mongoose = require('mongoose');
 
 const controller = {};
@@ -97,32 +96,16 @@ controller.insertGHnaPasta = async (req, res) => {
     }
 }
 
-controller.insertTagGHPasta = async (req, res) => {
+controller.insertTag = async (req, res) => {
 
-    const _idPasta  = req.params.pasta;
-    const _idGh     = req.params.ghuser
-    const tag       = req.body.tag;
+    const _idPasta  = req.params.id;
+    const { tag }   = req.body;
 
-    if(!_idPasta || !_idGh || !tag) return res.status(400).json('Id da pasta, do usuario do github e a tag são necessários.');
+    if(!_idPasta || !tag) return res.status(400).json('Id da pasta, do usuario do github e a tag são necessários.');
 
     try{
-        const ghuser = await GHModel.findById(_idGh);
-        if(!ghuser) return res.status(400).json('Não existe este usuário.');
-
-        // todas as patas que este usuario estiver.
-        const pastas = await Pasta.find()
-        .elemMatch('GHs', { '_id': mongoose.Types.ObjectId(_idGh) });
-
-        const tagData = new Tag({ nome: tag });
-        tagData.save(err => {
-            if(err) return res.status(500).json('erro ao salvar a tag.');
-        });
-
-        if(tagData){
-            await GHModel.findByIdAndUpdate(_idGh, { '$push': { 'tags': tagData._id } }, { 'new': true } );
-        }
-
-        return res.status(200).json(pastas);
+        const pasta = await Pasta.findByIdAndUpdate(_idPasta, { '$addToSet': { 'tags': tag } }, { 'new': true });
+        return res.status(201).json(pasta);
     }
     catch(e){
         console.error(e);
