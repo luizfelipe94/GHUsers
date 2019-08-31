@@ -22,4 +22,4 @@ USER node
 
 EXPOSE 3005
 
-CMD [ "node", "index.js" ]
+# CMD [ "node", "index.js" ]
