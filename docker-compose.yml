@@ -1,10 +1,10 @@
 version: '3'
 services:
-  # api:
-  #   container_name: api-github
-  #   build: .
-  #   ports:
-  #     - "3010:3005"
+  api:
+    container_name: api-github
+    build: .
+    ports:
+      - "3010:3005"
   mongo:
     container_name: mongo-github
     image: mongo
